@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8876:80"
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d:/etc/nginx/conf.d/
+    container_name: nginx_app
+  
+  php:
+    image: php:8.2-fpm
+    volumes:
+      - ./:/var/www
