@@ -11,7 +11,7 @@ class Send {
 
 
     //Отправка запроса в api
-    public function sendRequest($table, $options = '', $method = 'GET', $data = null) 
+    public function sendRequest($table, $options = '', $method = 'GET', $data = null): array
     {
         $result = [];
         $url = $this->base_url . '/' . $table . $options;
@@ -33,7 +33,7 @@ class Send {
 
             $result = json_decode($response, true);
 
-            if(!is_array($result)){
+            if(json_last_error()){
                 throw new MyException("Неверный формат данных");
             } 
             
@@ -43,7 +43,7 @@ class Send {
 
         curl_close($ch);
 
-        return $result != null ? $result : [];
+        return is_array($result) ? $result : [];
     }
 
     //Очистка массива с ошибками
